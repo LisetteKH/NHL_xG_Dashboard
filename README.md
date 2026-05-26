@@ -175,7 +175,7 @@ nhl_xg_project/
 ## Author
 
 **Lisette Kamper-Hinson**
-M.S. Computer Science, Wake Forest University
+M.S. Computer Science | Data Science Certificate
 [LinkedIn](https://www.linkedin.com/in/lisette-kamper-hinson) | [GitHub](https://github.com/LisetteKH)
 
 
