@@ -27,7 +27,7 @@ An interactive R Shiny dashboard for analyzing shot quality and expected goals (
 
 ## What This Project Does
 
-Most NHL analytics tools show raw shot counts. This dashboard goes further -- it asks not just *how many* shots a team took, but *how dangerous* those shots were, and whether goalies stopped more or fewer goals than they should have given the difficulty of the chances they faced.
+Most NHL analytics tools show raw shot counts. This dashboard goes further, it asks not just *how many* shots a team took, but *how dangerous* those shots were, and whether goalies stopped more or fewer goals than they should have given the difficulty of the chances they faced.
 
 The core metric is **expected goals (xG)**: a probability assigned to each shot based on where it came from, what type of shot it was, and the game situation. A shot from the slot on a rebound is worth more than a wrist shot from the blue line. Aggregating xG across games reveals which teams and goalies are genuinely good versus lucky.
 
@@ -43,12 +43,12 @@ goal ~ s(distance, k=10) + s(angle, k=10) + shot_type +
        is_rebound + is_rush + strength_state + overtime
 ```
 
-Smooth terms on distance and angle allow the model to capture the non-linear relationship between shot location and goal probability -- a shot 15 feet out is disproportionately more dangerous than one 25 feet out, not just slightly more dangerous. GAM handles this naturally where logistic regression with raw distance would not.
+Smooth terms on distance and angle allow the model to capture the non-linear relationship between shot location and goal probability, a shot 15 feet out is disproportionately more dangerous than one 25 feet out, not just slightly more dangerous. GAM handles this naturally where logistic regression with raw distance would not.
 
 **Key modeling decisions:**
 - Empty net shots excluded from training and assigned xG = 0.85 post-prediction, since they are effectively guaranteed goals that reflect game state rather than shot quality
 - Strength state included (5v5, powerplay, shorthanded) because shot quality distributions differ meaningfully by situation
-- Rebound and rush flags included as binary features -- both significantly increase goal probability
+- Rebound and rush flags included as binary features, both significantly increase goal probability
 
 **Validation results (2025-26 holdout):**
 
@@ -58,7 +58,7 @@ Smooth terms on distance and angle allow the model to capture the non-linear rel
 | Powerplay | 10.4%           | 11.8%           |
 | Shorthanded | 7.09%         | 7.64%           |
 
-The model slightly overestimates across all situations, which is expected -- it sees shot quality but not goalie quality, so the residual is partly explained by goalie performance above/below average.
+The model slightly overestimates across all situations, which is expected, it sees shot quality but not goalie quality, so the residual is partly explained by goalie performance above/below average.
 
 ---
 
