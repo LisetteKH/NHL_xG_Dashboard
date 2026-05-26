@@ -12,13 +12,13 @@ This repository is intended for portfolio and demonstration purposes only. Repro
 
 **Lisette Kamper-Hinson | M.S. Computer Science | Data Science Certificate **
 
-![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)
-![Shiny](https://img.shields.io/badge/Shiny-blue?style=for-the-badge&logo=rstudio&logoColor=white)
-![ggplot2](https://img.shields.io/badge/ggplot2-276DC3?style=for-the-badge&logo=r&logoColor=white)
-![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
-![REST API](https://img.shields.io/badge/REST_API-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![GAM](https://img.shields.io/badge/GAM_Modeling-FF6B35?style=for-the-badge&logo=r&logoColor=white)
-![Sports Analytics](https://img.shields.io/badge/Sports_Analytics-1A1A2E?style=for-the-badge&logo=hockey&logoColor=white)
+[![R](https://img.shields.io/badge/R-4.x-276DC3)](https://www.r-project.org/)
+[![Shiny](https://img.shields.io/badge/Shiny-Dashboard-blue)](https://shiny.posit.co/)
+[![ggplot2](https://img.shields.io/badge/ggplot2-Visualization-276DC3)](https://ggplot2.tidyverse.org/)
+[![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75)](https://plotly.com/r/)
+[![mgcv](https://img.shields.io/badge/mgcv-GAM%20Modeling-FF6B35)](https://cran.r-project.org/package=mgcv)
+[![NHL API](https://img.shields.io/badge/NHL%20API-REST-009688)](https://api-web.nhle.com/v1)
+[![Sports Analytics](https://img.shields.io/badge/Sports-Analytics-black)](https://github.com/)
 
 
 An interactive R Shiny dashboard for analyzing shot quality and expected goals (xG) across 7 NHL seasons (2019-20 through 2025-26). Built as an analytics portfolio project demonstrating end-to-end sports data science: data engineering, statistical modeling, and interactive visualization.
@@ -177,3 +177,9 @@ nhl_xg_project/
 **Lisette Kamper-Hinson**
 M.S. Computer Science, Wake Forest University
 [LinkedIn](https://www.linkedin.com/in/lisette-kamper-hinson) | [GitHub](https://github.com/LisetteKH)
+
+
+
+
+
+
