@@ -10,7 +10,7 @@ This repository is intended for portfolio and demonstration purposes only. Repro
 
 # NHL Expected Goals Dashboard
 
-**Lisette Kamper-Hinson | M.S. Computer Science | Data Science Certificate **
+Lisette Kamper-Hinson | M.S. Computer Science | Data Science Certificate 
 
 [![R](https://img.shields.io/badge/R-4.x-276DC3)](https://www.r-project.org/)
 [![Shiny](https://img.shields.io/badge/Shiny-Dashboard-blue)](https://shiny.posit.co/)
