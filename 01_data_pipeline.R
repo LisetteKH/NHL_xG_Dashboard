@@ -21,7 +21,7 @@ library(glue)
 
 source("00_api_client.R")
 
-# ── Null coalescing operator ──────────────────────────────────────────────────
+# Null coalescing operator
 `%||%` <- function(a, b) if (!is.null(a) && length(a) > 0 && !is.na(a[[1]])) a else b
 
   
