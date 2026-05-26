@@ -24,9 +24,9 @@ source("00_api_client.R")
 # ── Null coalescing operator ──────────────────────────────────────────────────
 `%||%` <- function(a, b) if (!is.null(a) && length(a) > 0 && !is.na(a[[1]])) a else b
 
-# =============================================================================
+  
 # 1. FETCH PLAY-BY-PLAY FOR A SINGLE GAME
-# =============================================================================
+
 
 get_game_pbp <- function(game_id) {
   url    <- glue("{NHL_API}/gamecenter/{game_id}/play-by-play")
@@ -34,9 +34,8 @@ get_game_pbp <- function(game_id) {
   return(result)
 }
 
-# =============================================================================
 # 2. PARSE SHOTS FROM RAW PLAY-BY-PLAY
-# =============================================================================
+
 # Extracts all shot events and captures every feature we need for:
 #   - xG model (distance, angle, shot type, rebound, strength state)
 #   - Power play analysis (situation_code, strength_state)
@@ -61,7 +60,7 @@ parse_shots <- function(game) {
       
       owner <- p$details$eventOwnerTeamId %||% NA
       
-      # ── Situation code parsing ──────────────────────────────────────────────
+      # Situation code parsing
       # 4-digit code: away_goalie | away_skater | home_skaters | home_goalie
       # e.g. "1551" = 5v5 even strength
       #      "1541" = home team on powerplay (home has 5, away has 4)
@@ -74,7 +73,7 @@ parse_shots <- function(game) {
       
       is_home_shooter <- !is.na(owner) && owner == home_id
       
-      # ── Strength state ──────────────────────────────────────────────────────
+      # Strength state
       strength_state <- if (is.na(away_sk) || is.na(home_sk)) {
         "5v5"
       } else if (away_sk == home_sk) {
@@ -85,7 +84,7 @@ parse_shots <- function(game) {
         if (away_sk > home_sk) "Powerplay" else "Shorthanded"
       }
       
-      # ── Empty net ───────────────────────────────────────────────────────────
+      # Empty net
       # Shooting at empty net = opposing goalie has been pulled
       empty_net <- if (is_home_shooter) {
         as.integer(!is.na(away_g) && away_g == 0)
@@ -93,7 +92,7 @@ parse_shots <- function(game) {
         as.integer(!is.na(home_g) && home_g == 0)
       }
       
-      # ── Skater counts ───────────────────────────────────────────────────────
+      # Skater counts
       # Useful for identifying 4v4, 3v3 OT situations
       shooting_skaters  <- if (is_home_shooter) home_sk else away_sk
       defending_skaters <- if (is_home_shooter) away_sk else home_sk
@@ -140,9 +139,8 @@ parse_shots <- function(game) {
     })
 }
 
-# =============================================================================
+
 # 3. ENGINEER FEATURES FOR xG MODEL
-# =============================================================================
 
 engineer_features <- function(shots) {
   shots |>
@@ -191,9 +189,8 @@ engineer_features <- function(shots) {
     )
 }
 
-# =============================================================================
+
 # 4. BUILD SHOT DATASET FOR ONE GAME
-# =============================================================================
 
 build_shot_dataset <- function(game_id) {
   message("Pulling game: ", game_id)
@@ -224,9 +221,8 @@ build_shot_dataset <- function(game_id) {
   return(data)
 }
 
-# =============================================================================
+
 # 5. SAVE SHOTS TO DISK
-# =============================================================================
 
 save_shots <- function(data, filename = "data/shots.rds") {
   dir.create(dirname(filename), showWarnings = FALSE, recursive = TRUE)
@@ -234,9 +230,7 @@ save_shots <- function(data, filename = "data/shots.rds") {
   message("Saved ", nrow(data), " shots to ", filename)
 }
 
-# =============================================================================
 # 6. PULL ALL GAME IDs FOR A SEASON
-# =============================================================================
 
 nhl_teams <- c("ANA","BOS","BUF","CAR","CBJ","CGY","CHI","COL",
                "DAL","DET","EDM","FLA","LAK","MIN","MTL","NJD",
@@ -263,9 +257,8 @@ get_season_game_ids <- function(season, game_types = c(2, 3)) {
   return(all_ids)
 }
 
-# =============================================================================
 # 7. PULL MULTIPLE SEASONS (saves each season individually)
-# =============================================================================
+
 
 pull_multiple_seasons <- function(seasons) {
   purrr::map_dfr(seasons, function(season) {
@@ -303,9 +296,8 @@ pull_multiple_seasons <- function(seasons) {
   })
 }
 
-# =============================================================================
 # 8. PULL PLAYER METADATA
-# =============================================================================
+
 # Maps player IDs to names, positions, headshots
 # Run after pulling shot data to get names for the dashboard
 
