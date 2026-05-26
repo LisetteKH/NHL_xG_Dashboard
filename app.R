@@ -16,7 +16,7 @@ library(jsonlite)
 library(tidyr)
 library(MASS)
 
-# ── Load data ─────────────────────────────────────────────────────────────────
+#  Load data 
 shots <- readRDS("data/shots_all.rds")
 model <- readRDS("data/model_gam.rds")
 
@@ -36,7 +36,7 @@ season_profiles <- {
   xgf |> left_join(xga, by=c("shooting_team"="defending_team"))
 }
 
-# ── API helpers ───────────────────────────────────────────────────────────────
+# API helpers
 `%||%` <- function(a, b) if (!is.null(a) && length(a) > 0) a else b
 NHL_API <- "https://api-web.nhle.com/v1"
 nhl_get <- function(url) {
@@ -51,7 +51,7 @@ nhl_teams <- c("ANA","BOS","BUF","CAR","CBJ","CGY","CHI","COL",
                "NSH","NYI","NYR","OTT","PHI","PIT","SEA","SJS",
                "STL","TBL","TOR","UTA","VAN","VGK","WPG","WSH")
 
-# ── CSS ───────────────────────────────────────────────────────────────────────
+# CUSTOM CSS
 custom_css <- "
   body, .wrapper { background-color: #0d1117 !important; }
   .content-wrapper { background-color: #0d1117 !important; }
@@ -116,7 +116,7 @@ custom_css <- "
   .game-card-btn:hover { background: #388bfd; }
 "
 
-# ── Helper functions ──────────────────────────────────────────────────────────
+# HELPER FUNCTIONS
 cup_finals <- list(
   "20192020" = list(champion="TBL", runnerup="DAL"),
   "20202021" = list(champion="TBL", runnerup="MTL"),
@@ -384,8 +384,7 @@ parse_live_shots <- function(pbp) {
                               (time_seconds-prev_time)<=10&distance<50)
     )
 }
-
-# ── UI ────────────────────────────────────────────────────────────────────────
+#UI
 ui <- dashboardPage(
   skin="black",
   dashboardHeader(title=span(icon("hockey-puck")," NHL xG Analytics")),
@@ -403,7 +402,7 @@ ui <- dashboardPage(
     tags$head(tags$style(HTML(custom_css))),
     tabItems(
       
-      # ── LEAGUE OVERVIEW ────────────────────────────────────────────────────
+      # LEAGUE OVERVIEW
       tabItem(tabName="overview",
               fluidRow(column(12,
                               div(style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;",
@@ -481,7 +480,7 @@ ui <- dashboardPage(
               )
       ),
       
-      # ── REGULAR VS PLAYOFFS ────────────────────────────────────────────────
+      # REGULAR vs PLAYOFFS
       tabItem(tabName="regvsplay",
               fluidRow(column(12, div(style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;",
                                       div(class="metric-box",
@@ -517,7 +516,7 @@ ui <- dashboardPage(
               ))
       ),
       
-      # ── STRENGTH STATE ─────────────────────────────────────────────────────
+      # STRENGTH STATE
       tabItem(tabName="strength",
               fluidRow(column(12, div(style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;",
                                       div(class="metric-box",
@@ -553,7 +552,7 @@ ui <- dashboardPage(
                            plotlyOutput("plot_strength_breakdown", height="380px")))
       ),
       
-      # ── GAME EXPLORER ──────────────────────────────────────────────────────
+      # GAME EXPLORER
       tabItem(tabName="games",
               fluidRow(column(12, div(style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;",
                                       div(class="metric-box",
@@ -599,7 +598,7 @@ ui <- dashboardPage(
               ))
       ),
       
-      # ── TEAM SPOTLIGHT ─────────────────────────────────────────────────────
+      # TEAM SPOTLIGHT
       tabItem(tabName="team",
               fluidRow(
                 column(3, selectInput("team_season", label="Season",
@@ -737,7 +736,7 @@ ui <- dashboardPage(
   )
 )
 
-# ── SERVER ────────────────────────────────────────────────────────────────────
+# SERVER
 server <- function(input, output, session) {
   
   # VALUE BOXES
@@ -1588,7 +1587,7 @@ server <- function(input, output, session) {
     )
   })
   
-  # ── GOALIE TAB ─────────────────────────────────────────────────────────────
+  # GOALIE TAB (work in progress)
   
   goalie_data_filtered <- reactive({
     d <- shots |>
@@ -1871,7 +1870,7 @@ server <- function(input, output, session) {
       coord_cartesian(xlim=c(25, 89))
   })
   
-  # ── TEAM vs GOALIE MATCHUP ──────────────────────────────────────────────────
+  # TEAM vs. GOALIE
   
   matchup_data <- reactive({
     gid  <- selected_goalie_id()
